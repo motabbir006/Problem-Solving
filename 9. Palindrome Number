@@ -1,0 +1,30 @@
+class Solution {
+public:
+    bool isPalindrome(int x) {
+        if(x<0) 
+        return false;
+
+        if(x==0) 
+        return true;
+
+        int ln = log10(x)+1;
+        if(ln==1)
+         return true;
+
+        int divL = (int)(pow(10,ln-1)+0.0003);
+        int modR = 10;
+        int i = 0;
+        int temp_x = x;
+        while(i<ln/2){
+            int le = x/divL;
+            divL/=10;
+            int ri = temp_x%modR;
+            temp_x/=10;
+            i++;
+            cout<<le<<" "<<ri<<endl;
+            if((le%10)!=ri) 
+                return false;
+        }
+        return true;
+    }
+};
