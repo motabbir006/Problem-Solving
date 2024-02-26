@@ -1,0 +1,27 @@
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        int n = s.size();
+        bool dp[n+50][n+50];
+        memset(dp, false, sizeof(dp));
+        int x,y,mx=INT_MIN;
+        for(int j=n-1; j>=0; j--) 
+        {
+            for(int i=j; i<=n-1; i++)
+            {
+                if(j==i) dp[j][i] = true;
+                else if(s[j] == s[i]) {
+                    if(i-j == 1) dp[j][i]=true;
+                    else dp[j][i] = dp[j+1][i-1];  // kotha hoilo "XabaX"  jodi aba hoi tokhn XabaX o palindrom
+                }
+                if(dp[j][i] && i-j>=mx) {
+                    mx=i-j;
+                    x=j;
+                    y=i;
+                }
+            }
+        }
+        return s.substr(x,y-x+1);
+        
+    }
+};
