@@ -1,0 +1,26 @@
+class Solution {
+public:
+    bool isValidSudoku(vector<vector<char>>& board) {
+        map<int, map<int, int> > rows;
+        map<int, map<int, int> > cols;
+        map<int, map<int, map<int, int> > > boxes;
+       
+
+        for(int j=0; j<9; j++) {
+            for(int k=0; k<9; k++) {
+                int L = board[j][k];
+                if(L=='.') continue;
+                if(rows[j][L]) return false;
+                if(cols[k][L]) return false;
+                if(boxes[j/3][k/3][L]) return false;
+                
+                rows[j][L]++;
+                cols[k][L]++;
+                boxes[j/3][k/3][L]++;
+
+            }
+        }
+
+        return true;
+    }
+};
