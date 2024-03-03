@@ -1,0 +1,36 @@
+class TimeMap {
+public:
+    TimeMap() {}
+
+    void set(std::string key, std::string value, int timestamp) {
+        data[key].push_back({timestamp, value});
+    }
+
+    std::string get(std::string key, int timestamp) {
+        if (data.find(key) == data.end()) {
+            return "";
+        }
+
+        const auto& values = data[key];
+
+        int left = 0, right = values.size() - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (values[mid].first == timestamp) {
+                return values[mid].second;
+            } else if (values[mid].first < timestamp) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        if (right == -1) {
+            return "";
+        }
+        return values[right].second;
+    }
+
+private:
+    std::unordered_map<std::string, std::vector<std::pair<int, std::string>>>
+        data;
+};
