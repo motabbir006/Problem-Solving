@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int trap(vector<int>& height)
+    {
+        int ans = 0, cur = 0;
+        stack<int> st;
+        while (cur < height.size()) {
+            while (!st.empty() && height[cur] > height[st.top()]) {
+                int top = st.top();
+                st.pop();
+                if (st.empty())
+                    break;
+                int distance = cur - st.top()-1;
+                int bounded_height = min(height[cur], height[st.top()]) - height[top];
+                ans += distance * bounded_height;
+            }
+            st.push(cur++);
+        }
+        return ans;
+    }
+};
