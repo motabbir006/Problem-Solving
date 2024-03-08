@@ -1,0 +1,16 @@
+class Solution {
+public:
+    vector<int> output;
+    void recur(TreeNode* root) {
+        if(root==nullptr) {
+            return;
+        }
+        output.push_back(root->val);
+        recur(root->left);
+        recur(root->right);
+    }
+    vector<int> preorderTraversal(TreeNode* root) {
+        recur(root);
+        return output;
+    }
+};
