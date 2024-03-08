@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int maxFrequencyElements(const std::vector<int>& nums) {
+        std::unordered_map<int, int> frequencyMap;
+
+        for (int num : nums) {
+            frequencyMap[num]++;
+        }
+
+        int maxFrequency = 0;
+        for (const auto& entry : frequencyMap) {
+            maxFrequency = std::max(maxFrequency, entry.second);
+        }
+        int countOfMaxFrequency = 0;
+        for (const auto& entry : frequencyMap) {
+            if (entry.second == maxFrequency) {
+                countOfMaxFrequency += entry.second;
+            }
+        }
+
+        return countOfMaxFrequency;
+    }
+};
