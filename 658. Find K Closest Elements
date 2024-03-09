@@ -1,0 +1,15 @@
+class Solution {
+public:
+    std::vector<int> findClosestElements(std::vector<int>& arr, int k, int x) {
+        auto cmp = [&](int a, int b) {
+            return std::abs(a - x) < std::abs(b - x) || (std::abs(a - x) == std::abs(b - x) && a < b);
+        };
+
+        std::sort(arr.begin(), arr.end(), cmp);
+
+        arr.resize(k);
+        std::sort(arr.begin(), arr.end());
+
+        return arr;
+    }
+};
