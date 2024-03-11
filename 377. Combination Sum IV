@@ -1,0 +1,36 @@
+from typing import List
+
+class Solution:
+    def successfulPairs(self, spells: List[int], potions: List[int], success: int) -> List[int]:
+        spells.sort()
+        potions.sort()
+
+        spell_count, potion_count = len(spells), len(potions)
+        pairs = 0
+
+        i, j = 0, 0
+
+        while i < spell_count and j < potion_count:
+            current_sum = spells[i] + potions[j]
+
+            if current_sum == success:
+                # Increment the count of successful pairs
+                pairs += 1
+                i += 1
+                j += 1
+            elif current_sum < success:
+                # If the sum is less than success, move to the next spell
+                i += 1
+            else:
+                # If the sum is greater than success, move to the next potion
+                j += 1
+
+        return pairs
+
+# Example usage:
+sol = Solution()
+spells = [1, 2, 3]
+potions = [4, 5, 6]
+success = 6
+result = sol.successfulPairs(spells, potions, success)
+print(result)
