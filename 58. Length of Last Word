@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int lengthOfLastWord(string s) {
+        int length = 0;
+        bool foundLastWord = false;
+
+        for (int i = s.length() - 1; i >= 0; --i) {
+
+            if (!isspace(s[i])) {
+                foundLastWord = true;
+                length++;
+            } 
+
+            else if (foundLastWord) {
+                break;
+            }
+        }
+        
+        return length;
+    }
+};
