@@ -1,0 +1,27 @@
+class Solution:
+    def removeZeroSumSublists(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        dummy = ListNode(0)
+        dummy.next = head
+        
+        prefix_sum_map = {}
+        prefix_sum = 0
+        current = dummy
+        
+        while current:
+            prefix_sum += current.val
+            if prefix_sum not in prefix_sum_map:
+                prefix_sum_map[prefix_sum] = current
+            else:
+                # Remove subarray with zero sum
+                prev = prefix_sum_map[prefix_sum]
+                start = prev.next
+                sum_to_remove = prefix_sum + start.val
+                while start != current:
+                    sum_to_remove += start.val
+                    if sum_to_remove in prefix_sum_map:
+                        del prefix_sum_map[sum_to_remove]
+                    start = start.next
+                prev.next = current.next
+            current = current.next
+        
+        return dummy.next
