@@ -1,0 +1,24 @@
+class Solution {
+public:
+    bool isValid(string s) {
+        stack<char> stk;
+        unordered_map<char, char> pairs = {
+            {')', '('},
+            {'}', '{'},
+            {']', '['}
+        };
+        
+        for (char c : s) {
+            if (pairs.count(c)) { // Closing bracket
+                if (stk.empty() || stk.top() != pairs[c]) {
+                    return false;
+                }
+                stk.pop();
+            } else { // Opening bracket
+                stk.push(c);
+            }
+        }
+        
+        return stk.empty();
+    }
+};
