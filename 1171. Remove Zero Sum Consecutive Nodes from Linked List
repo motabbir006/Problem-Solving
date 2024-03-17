@@ -9,19 +9,16 @@ class Solution:
         
         while current:
             prefix_sum += current.val
-            if prefix_sum not in prefix_sum_map:
-                prefix_sum_map[prefix_sum] = current
-            else:
-                # Remove subarray with zero sum
-                prev = prefix_sum_map[prefix_sum]
-                start = prev.next
-                sum_to_remove = prefix_sum + start.val
-                while start != current:
-                    sum_to_remove += start.val
-                    if sum_to_remove in prefix_sum_map:
-                        del prefix_sum_map[sum_to_remove]
-                    start = start.next
-                prev.next = current.next
+            prefix_sum_map[prefix_sum] = current
+            current = current.next
+        
+        prefix_sum = 0
+        current = dummy
+        
+        while current:
+            prefix_sum += current.val
+            if prefix_sum in prefix_sum_map:
+                current.next = prefix_sum_map[prefix_sum].next
             current = current.next
         
         return dummy.next
