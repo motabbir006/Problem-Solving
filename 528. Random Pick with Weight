@@ -1,0 +1,37 @@
+class Solution {
+private:
+    vector<int> prefix_sum;
+
+public:
+    Solution(vector<int>& w) {
+        int sum = 0;
+        for (int weight : w) {
+            sum += weight;
+            prefix_sum.push_back(sum);
+        }
+    }
+    
+    int pickIndex() {
+        int total_weight = prefix_sum.back();
+
+        int random_num = rand() % total_weight + 1;
+
+        int left = 0, right = prefix_sum.size() - 1;
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (prefix_sum[mid] < random_num)
+                left = mid + 1;
+            else
+                right = mid;
+        }
+        
+        return left;
+    }
+};
+
+
+/**
+ * Your Solution object will be instantiated and called as such:
+ * Solution* obj = new Solution(w);
+ * int param_1 = obj->pickIndex();
+ */
