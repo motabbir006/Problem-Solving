@@ -1,0 +1,39 @@
+class Solution {
+public:
+    int leastInterval(vector<char>& tasks, int n) {
+        unordered_map<char, int> taskCount;
+        priority_queue<int> pq;
+
+        for (char task : tasks) {
+            taskCount[task]++;
+        }
+
+        for (auto& entry : taskCount) {
+            pq.push(entry.second);
+        }
+
+        int intervals = 0;
+        while (!pq.empty()) {
+            vector<int> temp;
+            int count = 0;
+
+            for (int i = 0; i <= n; i++) {
+                if (!pq.empty()) {
+                    temp.push_back(pq.top() - 1);
+                    pq.pop();
+                    count++;
+                }
+            }
+
+            for (int taskCount : temp) {
+                if (taskCount > 0) {
+                    pq.push(taskCount);
+                }
+            }
+
+            intervals += pq.empty() ? count : n + 1;
+        }
+
+        return intervals;
+    }
+};
