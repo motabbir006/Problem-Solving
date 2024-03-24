@@ -1,0 +1,21 @@
+class MyCalendarThree {
+private:
+    std::map<int, int> bookings;
+
+public:
+    MyCalendarThree() {}
+    
+    int book(int start, int end) {
+        ++bookings[start];
+        --bookings[end];
+
+        int maxBooking = 0;
+        int ongoingBooking = 0;
+        for (const auto& [time, count] : bookings) {
+            ongoingBooking += count;
+            maxBooking = std::max(maxBooking, ongoingBooking);
+        }
+
+        return maxBooking;
+    }
+};
