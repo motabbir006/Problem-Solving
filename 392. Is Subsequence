@@ -1,0 +1,17 @@
+class Solution {
+public:
+    bool isSubsequence(string s, string t) {
+        int sIndex = 0; // Pointer for string s
+        int tIndex = 0; // Pointer for string t
+
+        while (sIndex < s.size() && tIndex < t.size()) {
+            if (s[sIndex] == t[tIndex]) {
+                sIndex++;
+            }
+
+            tIndex++;
+        }
+
+        return sIndex == s.size();
+    }
+};
