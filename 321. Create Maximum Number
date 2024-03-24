@@ -1,0 +1,46 @@
+class Solution {
+public:
+    vector<int> maxNumber(vector<int>& nums1, vector<int>& nums2, int k) {
+        vector<int> result(k, 0);
+        int n = nums1.size(), m = nums2.size();
+
+        for (int i = max(0, k - m); i <= min(k, n); ++i) {
+            vector<int> candidate = merge(maxArray(nums1, i), maxArray(nums2, k - i), k);
+            if (greater(candidate, 0, result, 0))
+                result = move(candidate);
+        }
+
+        return result;
+    }
+
+private:
+    vector<int> maxArray(vector<int>& nums, int k) {
+        int drop = nums.size() - k;
+        vector<int> result;
+        for (int num : nums) {
+            while (drop && result.size() && result.back() < num) {
+                result.pop_back();
+                drop--;
+            }
+            result.push_back(num);
+        }
+        result.resize(k);
+        return result;
+    }
+
+    vector<int> merge(vector<int> nums1, vector<int> nums2, int k) {
+        vector<int> result(k);
+        for (int i = 0, j = 0, r = 0; r < k; ++r) {
+            result[r] = greater(nums1, i, nums2, j) ? nums1[i++] : nums2[j++];
+        }
+        return result;
+    }
+
+    bool greater(vector<int>& nums1, int i, vector<int>& nums2, int j) {
+        while (i < nums1.size() && j < nums2.size() && nums1[i] == nums2[j]) {
+            i++;
+            j++;
+        }
+        return j == nums2.size() || (i < nums1.size() && nums1[i] > nums2[j]);
+    }
+};
