@@ -1,0 +1,30 @@
+class Solution:
+    def threeSumClosest(self, nums: List[int], target: int) -> int:
+        nums.sort()
+        closest_sum = float('inf') 
+        min_diff = float('inf')  
+
+        for i in range(len(nums)):
+            # Skip the duplicates of the first number
+            if i > 0 and nums[i] == nums[i - 1]:
+                continue
+            
+            left = i + 1
+            right = len(nums) - 1
+            
+            while left < right:
+                current_sum = nums[i] + nums[left] + nums[right]
+                diff = abs(target - current_sum)
+
+                if current_sum == target:
+                    return current_sum  # Found an exact match, return it immediately
+                elif current_sum < target:
+                    left += 1
+                else:
+                    right -= 1
+
+                if diff < min_diff:
+                    min_diff = diff
+                    closest_sum = current_sum
+
+        return closest_sum
